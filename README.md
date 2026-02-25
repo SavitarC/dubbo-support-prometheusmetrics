@@ -19,10 +19,10 @@ mvn spring-boot:run
 ## 验证 Prometheus 指标输出
 
 ```bash
-curl -s http://127.0.0.1:18180/metrics | sort
+curl -s http://127.0.0.1:18180/metrics | grep "^dubbo_" | sort
 ```
 
-如果启动成功，这个命令会输出 Prometheus 文本格式指标（包含 `# HELP` / `# TYPE` 行）。
+如果启动成功，这个命令会输出 Dubbo 暴露的 Prometheus 指标（以 `dubbo_` 前缀开头）。
 
 > 说明：Spring Boot 默认 JSON 指标端点是 `/metrics`，为满足本项目验证命令，配置里将 JSON 指标端点改为 `/actuator-metrics`，并把 Prometheus 端点映射到 `/metrics`。
 
@@ -37,3 +37,8 @@ curl "http://127.0.0.1:18180/ping?name=world"
 ```text
 Hello, world
 ```
+
+
+## 兼容 Prometheus 新客户端
+
+当前示例内置了对 Micrometer Prometheus 1.x（`io.micrometer.prometheusmetrics.*`）包名的兼容处理，避免 `dubbo.metrics.protocol=prometheus` 时因旧类名探测失败而降级为 NOP reporter。
