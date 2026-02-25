@@ -24,12 +24,10 @@ curl -s http://127.0.0.1:18180/metrics | grep "^dubbo_" | sort
 
 如果启动成功，这个命令会输出 Dubbo 暴露的 Prometheus 指标（以 `dubbo_` 前缀开头）。
 
-> 说明：Spring Boot 默认 JSON 指标端点是 `/metrics`，为满足本项目验证命令，配置里将 JSON 指标端点改为 `/actuator-metrics`，并把 Prometheus 端点映射到 `/metrics`。
-
 ## 其他接口
 
 ```bash
-curl "http://127.0.0.1:18180/ping?name=world"
+curl "http://127.0.0.1:8080/ping?name=world"
 ```
 
 返回示例：
